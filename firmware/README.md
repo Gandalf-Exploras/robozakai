@@ -23,4 +23,16 @@ target is `esp32:esp32:esp32` (ESP32 Dev Module).
 
 Record the board profile and the serial result in the issue.
 
+## ESP32 Wi-Fi LAN diagnostic
+
+[`robozak_wifi_lan`](robozak_wifi_lan/robozak_wifi_lan.ino) checks Wi-Fi
+association, DHCP, and a TCP echo between the computer and the ESP32. The
+[Python runner](../software/README.md#verify-esp32-wi-fi-lan) manages the upload,
+repeated trials, and restoration of the USB diagnostic.
+
+In the 2026-11-20 bench session, the board associated and obtained an IPv4
+address in two of three attempts. Neither connected attempt returned the TCP
+echo, even with the computer on the same SSID. Local TCP communication remains
+unverified. The USB diagnostic passed after restoration.
+
 Servo limits and movement sequencing should be implemented as deterministic control logic.

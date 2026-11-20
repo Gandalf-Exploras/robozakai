@@ -45,3 +45,18 @@ The client sends 20 sequential `PING <id>` commands at 115200 baud and checks
 that each matching `PONG <id>` arrives within one second. It also checks that
 `UNKNOWN` returns `ERR`. The firmware accepts ASCII decimal IDs, one command per
 line, with LF or CRLF endings. Heartbeats share the same serial connection.
+
+## Verify ESP32 Wi-Fi LAN
+
+Connect the PC to the target Wi-Fi network, close any serial monitor, and run
+from the repository root using Arduino CLI, the Espressif ESP32 core, and pySerial.
+
+```powershell
+.\.venv\Scripts\python.exe software/check_wifi_lan.py COM3 'YOUR_SSID'
+```
+
+Enter the passphrase at the hidden prompt, or add `--secret-reference` with an
+`op://` reference to use the 1Password CLI. The session reads the passphrase
+once and reuses it in memory for all attempts. The ESP32 uses volatile Wi-Fi
+configuration. `--count` defaults to 3. The runner temporarily uploads the LAN
+diagnostic, then restores the repository's USB diagnostic and verifies it.
