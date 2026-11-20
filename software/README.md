@@ -30,3 +30,18 @@ Then listen for 10 seconds (replace `COM3` with the board's port):
 ```
 
 The default is 115200 baud; use `--baud` and `--seconds` to change the settings. The script does not send serial data. Opening a serial port can reset some boards, and a quiet port does not necessarily indicate a fault: the firmware may not print anything or may use a different baud rate.
+
+## Verify ESP32 serial commands
+
+Upload the [ESP32 diagnostic sketch](../firmware/README.md#esp32-usb-serial-stability-test)
+and close any serial monitor using the board's port. With the same virtual
+environment, run the following command, substituting the current port for `COM3`.
+
+```powershell
+.\.venv\Scripts\python.exe software/check_serial_roundtrip.py COM3
+```
+
+The client sends 20 sequential `PING <id>` commands at 115200 baud and checks
+that each matching `PONG <id>` arrives within one second. It also checks that
+`UNKNOWN` returns `ERR`. The firmware accepts ASCII decimal IDs, one command per
+line, with LF or CRLF endings. Heartbeats share the same serial connection.
