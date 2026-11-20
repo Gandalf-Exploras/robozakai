@@ -60,3 +60,19 @@ Enter the passphrase at the hidden prompt, or add `--secret-reference` with an
 once and reuses it in memory for all attempts. The ESP32 uses volatile Wi-Fi
 configuration. `--count` defaults to 3. The runner temporarily uploads the LAN
 diagnostic, then restores the repository's USB diagnostic and verifies it.
+
+## Verify direct ESP32 Wi-Fi
+
+On Windows, connect to a saved Wi-Fi profile and close any serial monitor.
+Use Ethernet as a fallback if you need continuous network access during the
+test. With Arduino CLI, the Espressif ESP32 core, and pySerial installed, run:
+
+```powershell
+.\.venv\Scripts\python.exe software/check_wifi_direct.py COM3
+```
+
+The runner uploads the access point sketch and joins its network temporarily
+using a randomly generated passphrase. It checks 20 TCP replies against a
+one-second limit, reconnects Windows to the original profile, and restores and
+checks the USB diagnostic. Add `--preflight` to check the active Windows profile
+without changing the connection or firmware.

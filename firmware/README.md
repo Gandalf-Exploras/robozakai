@@ -35,4 +35,15 @@ address in two of three attempts. Neither connected attempt returned the TCP
 echo, even with the computer on the same SSID. Local TCP communication remains
 unverified. The USB diagnostic passed after restoration.
 
+## ESP32 direct Wi-Fi diagnostic
+
+[`robozak_direct_ap`](robozak_direct_ap/robozak_direct_ap.ino) creates a temporary
+protected access point and serves TCP `PING`/`PONG`. The
+[Windows runner](../software/README.md#verify-direct-esp32-wi-fi) tests 20 round
+trips and restores the prior Wi-Fi connection and USB diagnostic.
+
+On 2026-11-20, all 20 TCP replies matched in both bench runs. The slowest reply
+took 75.4 ms in the initial run and 70.3 ms with the published runner. All 20 USB
+round trips also passed after each firmware restoration.
+
 Servo limits and movement sequencing should be implemented as deterministic control logic.
